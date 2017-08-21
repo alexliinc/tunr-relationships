@@ -1,6 +1,9 @@
 import { db } from '../models';
 var Artist = db.models.Artist;
 
+//ADDED
+var Song = db.models.Song;
+
 function index(req, res) {
 	Artist.findAll().then(function(artists) {
 		res.json(artists);
@@ -8,7 +11,10 @@ function index(req, res) {
 }
 
 function show(req, res) {
-  Artist.findById(req.params.id)
+  Artist.findById(req.params.id, {
+    //ADDED Return all songs that have a matching artistId
+    include: Song
+  })
   .then(function(artist){
     if(!artist) res.send(res, "not found");
     //Artist.sing();

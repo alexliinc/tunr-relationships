@@ -1,6 +1,24 @@
 import { db } from '../models';
 let DB = db.models;
 
+//ADDED
+var lucySongs = [
+	{
+		title: "O sole mio",
+		duration: "3:21",
+		date_of_release: "1990",
+		album_title: "Three Tenors in Concert",
+		artistId: ""
+	},
+	{
+		title: "Nessun dorma",
+		duration: "3:21",
+		date_of_release: "1990",
+		album_title: "Three Tenors in Concert",
+		artistId: ""
+	}
+];
+
 var artistCreate = function() {
 	return DB.Artist.create({
     name: 'Luciano Pavarotti',
@@ -8,7 +26,13 @@ var artistCreate = function() {
     nationality: 'Italiano',
     instrument: 'Voice',
     home_address: '1 Strada Roma'
-  });
+  })
+	.then(function(artist){
+  	lucySongs.forEach(function(song){
+  		song.artistId = artist.id;
+  	})
+  	DB.Song.bulkCreate(lucySongs);	
+	});
 };
 
 var managerCreate = function() {
