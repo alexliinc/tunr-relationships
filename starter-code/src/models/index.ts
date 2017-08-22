@@ -5,7 +5,8 @@ var sequelize = new Sequelize('postgres://alexli@localhost:5432/tunr_relationshi
 
 var Artist = sequelize.import("./artist");
 var Manager = sequelize.import("./manager");
-var Song = sequelize.import("./song")
+var Song = sequelize.import("./song");
+var Ad = sequelize.import("./ad")
 
 //ADDED
 Song.belongsTo(Artist);
@@ -14,6 +15,10 @@ Artist.hasMany(Song);
 //ADDED
 Artist.belongsTo(Manager);
 Manager.hasMany(Artist);
+
+//ADDED
+Ad.belongsTo(Manager);
+Manager.hasOne(Ad);
 
 const db = <any>{};
 db.models = {

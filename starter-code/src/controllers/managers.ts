@@ -1,14 +1,26 @@
 import { db } from '../models';
 var Manager = db.models.Manager;
 
+//ADDED
+var Artist = db.models.Artist;
+
+//ADDED
+var Ad = db.models.Ad;
+
 function index(req, res) {
-	Manager.findAll().then(function(managers) {
+	Manager.findAll({
+    //ADDED Return all songs that have a matching artistId
+    include: Ad
+  }).then(function(managers) {
 		res.json(managers);
 	});
 }
 
 function show(req, res) {
-  Manager.findById(req.params.id)
+  Manager.findById(req.params.id, {
+    //ADDED Return all songs that have a matching artistId
+    include: Artist
+  })
   .then(function(manager){
     if(!manager) res.send(res, "not found");
     else res.json(manager);
