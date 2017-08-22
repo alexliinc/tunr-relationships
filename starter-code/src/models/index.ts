@@ -24,7 +24,8 @@ const db = <any>{};
 db.models = {
 	Artist,
 	Manager,
-	Song
+	Song,
+	Ad//ADDED
 };
 
 //Export models and Sequelize for seed and dbSetup

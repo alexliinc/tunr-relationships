@@ -28,6 +28,11 @@ var managerCreate = function() {
     cell_phone_number: '718-989-1231'
 	})
 	.then(function(manager){
+		DB.Ad.create({
+		headline:'NEW AD',
+	    url: 'www.yahoo.com',
+	    managerId: manager.id  
+		}),
 		DB.Artist.create({
 	    name: 'Luciano Pavarotti',
 	    photoUrl: 'http://img.informador.com.mx/biblioteca/imagen/677x508/811/810055.jpg',
@@ -35,13 +40,13 @@ var managerCreate = function() {
 	    instrument: 'Voice',
 	    home_address: '1 Strada Roma',
 	    managerId: manager.id
-	  })
-		.then(function(artist){
-	  	lucySongs.forEach(function(song){
-	  		song.artistId = artist.id;
-	  	})
-	  	DB.Song.bulkCreate(lucySongs);	
-		});
+	    })
+			.then(function(artist){
+			  	lucySongs.forEach(function(song){
+			  		song.artistId = artist.id;
+			  	})
+		  	DB.Song.bulkCreate(lucySongs);	
+			});
 	});
 };
 
@@ -54,16 +59,17 @@ var songCreate = function() {
 	});
 };
 
-var adCreate = function() {
-	return DB.Ad.create({
-		headline: "NEW AD",
-	    url: "awesome.com",
-	    managerId: 1  
-	});
-};
+// var adCreate = function() {
+// 	return DB.Ad.create({
+// 		headline:'NEW AD',
+// 	    url: 'awesome.com',
+// 	    managerId: 1  
+// 	});
+// };
 
 managerCreate()
 .then(songCreate)
+//.then(adCreate)
 .then(function() {
 	process.exit();
 });
